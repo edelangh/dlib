@@ -901,8 +901,10 @@ void detect_from_fhog_pyramid (
         tid = pthread_create(&(gg_threads[l]), NULL,
                 func, gg_threaddata[l]);
     }
-    for (unsigned long l = 0; l < THREADS_COUNT; ++l)
+    for (unsigned long l = 0; l < THREADS_COUNT; ++l) {
         pthread_join(gg_threads[l], NULL);
+        delete gg_threaddata[l];
+    }
     Py_END_ALLOW_THREADS
     std::sort(dets.rbegin(), dets.rend(), compare_pair_rect);
 }
