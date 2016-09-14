@@ -161,6 +161,29 @@ namespace dlib
         }
 
 #ifdef DLIB_HAS_RVALUE_REFERENCES
+
+        array2d(const array2d& item) : array2d()
+        {
+                *this = item;
+        }
+
+        array2d& operator= (
+            const array2d& rhs
+        )
+        {
+            nc_ = rhs.nc_;
+            nr_ = rhs.nr_;
+            data = pool.allocate_array(nr_*nc_);
+            last = data + nr_*nc_ - 1;
+            at_start_ = true;
+            cur = data;
+
+            for (unsigned long i = 0 ; i < nc_ * nr_; ++i) {
+                data[i] = rhs.data[i];
+            }
+            return *this;
+        }
+
         array2d(array2d&& item) : array2d()
         {
             swap(item);
@@ -329,10 +352,6 @@ namespace dlib
         mutable T* cur;
         T* last;
         mutable bool at_start_;
-
-        // restricted functions
-        array2d(array2d&);        // copy constructor
-        array2d& operator=(array2d&);    // assignment operator
 
     };
 

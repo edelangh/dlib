@@ -624,7 +624,7 @@ setup(
         'develop': develop,
     },
     zip_safe=False,
-    ext_modules=[Extension('dlib', [])],
+    ext_modules=[Extension('dlib', [],extra_compile_args=["-O3"])],
     ext_package='dlib',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
